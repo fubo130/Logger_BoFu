@@ -34,6 +34,7 @@ public class Timer {
 		  if (timeToWait < 0) {
 			  throw new TimerException("Cannot be less than zero");
 		  }
+		  
 	      timeNow = System.currentTimeMillis();
 		  method(timeToWait);
 			
@@ -41,8 +42,14 @@ public class Timer {
 			logger.severe("InterruptedException rised");
 			throw new TimerException("Sleep exception", e);
 		} finally {
-			logger.info("Calling took: "+ (System.currentTimeMillis() - timeNow));
-			logger.info("* should take: "+ timeToWait);
+			if (timeNow != null) {
+				logger.info("Calling took: "+ (System.currentTimeMillis() - timeNow));
+				logger.info("* should take: "+ timeToWait);
+			}
+			else {
+				logger.info("Error: The value are invalid.");
+			}
+			
 		}
 		return timeNow;
 	}
